@@ -207,7 +207,7 @@ function App() {
         <header className="topbar">
           <div className="topbar-left">
             <button className="icon-btn mobile-menu" onClick={() => setMobileNav(true)} aria-label="Open menu"><Menu size={20}/></button>
-            <div><div className="breadcrumb">Workspace <span>/</span> <strong>{pageTitle}</strong></div><h1>{page === "dashboard" ? "Welcome, {user.name}" : pageTitle}</h1></div>
+            <div><div className="breadcrumb">Workspace <span>/</span> <strong>{pageTitle}</strong></div><h1>{page === "dashboard" ? <h1>Welcome, {user?.name || "User"}</h1>: pageTitle}</h1></div>
           </div>
           <div className="topbar-actions">
             <div className="today-pill"><CalendarDays size={15}/>{new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</div>
