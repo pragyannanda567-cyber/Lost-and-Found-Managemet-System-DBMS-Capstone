@@ -44,7 +44,7 @@ function App() {
   const isAdmin=user?.role==='Admin';
   const [items, setItems] = useState([]);
   const [claims, setClaims] = useState([]);
-  const API = 'http://localhost:4000/api';
+  const API = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
   const request = async (path, options = {}) => {
     const response = await fetch(`${API}${path}`, {
       ...options, headers: { 'Content-Type': 'application/json', ...(token ? {Authorization:`Bearer ${token}`} : {}), ...options.headers }
