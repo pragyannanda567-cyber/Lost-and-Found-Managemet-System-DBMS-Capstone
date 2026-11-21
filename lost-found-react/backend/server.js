@@ -44,7 +44,9 @@ const db = mysql.createPool({
   connectionLimit: 10,
   dateStrings: true
 });
-const itemSelect = 'SELECT id,name,type,category,color,location,DATE_FORMAT(date, "%Y-%m-%d") AS date,status,description,reporter FROM items';
+const itemSelect = `SELECT id, name, type, category, color, location,
+DATE_FORMAT(date, '%Y-%m-%d') AS date,
+status, description, reporter FROM items`;
 const claimSelect = `SELECT c.id, c.item_id AS itemId, i.name AS itemName, c.claimant,
   DATE_FORMAT(c.date, '%Y-%m-%d') AS date, c.status FROM claims c JOIN items i ON i.id=c.item_id`;
 const valid = (v, values) => values.includes(v);
