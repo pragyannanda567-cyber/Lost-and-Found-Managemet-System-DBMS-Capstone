@@ -37,7 +37,7 @@ function Badge({ children, tone = "neutral" }) {
 
 function App() {
   const [user,setUser] = useState(null);
-  const [token,setToken] = useState(() => sessionStorage.getItem('findit_token') || '');
+  const [token, setToken] = useState(() => localStorage.getItem('findit_token') || '');
   const [authMode,setAuthMode] = useState('login');
   const [authForm,setAuthForm] = useState({name:'',email:'',password:''});
   const [authError,setAuthError] = useState('');
@@ -66,10 +66,24 @@ function App() {
   const submitAuth=async(e)=>{
     e.preventDefault();setAuthError('');
     try { const result=await request(`/auth/${authMode==='login'?'login':'signup'}`,{method:'POST',body:JSON.stringify(authForm)});
-      sessionStorage.setItem('findit_token',result.token);setToken(result.token);setUser(result.user);setAuthForm({name:'',email:'',password:''});setPage('dashboard');
+      localStorage.setItem('findit_token', result.token);
+      localStorage.setItem('findit_user', JSON.stringify(result.user));
+
+      setToken(result.token);
+      setUser(result.user);
+      setAuthForm({name:'',email:'',password:''});setPage('dashboard');
     } catch(err) { setAuthError(err.message); }
   };
-  const logout=()=>{sessionStorage.removeItem('findit_token');setToken('');setUser(null);setItems([]);setClaims([]);setPage('dashboard');};
+  const logout = () => {
+    localStorage.removeItem('findit_token');
+    localStorage.removeItem('findit_user');
+
+    setToken('');
+    setUser(null);
+    setItems([]);
+    setClaims([]);
+    setPage('dashboard');
+  };
   const [page, setPage] = useState("dashboard");
   const [query, setQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState("All reports");
