@@ -59,7 +59,7 @@ const auth = (req,res,next) => {
 };
 const admin = (req,res,next) => req.user.role === 'Admin' ? next() : res.status(403).json({error:'Admin access required.'});
 const publicUser = (row) => ({id:row.id,name:row.name,email:row.email,role:row.role});
-const sign = (row) => jwt.sign(publicUser(row),jwtSecret,{expiresIn:'8h'});
+const sign = (row) => jwt.sign(publicUser(row),jwtSecret,{expiresIn:'7d'});
 app.post('/api/auth/signup',async(req,res) => {
   const {name,email,password}=req.body || {};
   if(typeof name!=='string' || !name.trim() || typeof email!=='string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || typeof password!=='string' || password.length<8 || password.length>72) return res.status(400).json({error:'Enter a name, valid email, and password of 8–72 characters.'});
